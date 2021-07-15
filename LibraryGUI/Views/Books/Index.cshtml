@@ -1,0 +1,127 @@
+﻿
+@model IEnumerable<LibraryGUI.Models.Book>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>List of books currently available</h2>
+
+<div class="container">
+    <div class="filter-box text-center">
+        <h3>What are you looking for at the library?</h3>
+        <form asp-controller="Books" asp-action="Search" method="get">
+            <div class="col-md-4 col-sm-6">
+                <div class="form-group">
+                    <label class="sr-only" for="keywords">Search by Keyword</label>
+                    <input class="form-control" placeholder="Search by Keyword" id="searchString" name="searchString" type="text">
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <select @*name="catalog" id="catalog"*@ class="form-control">
+                        <option>Search the Catalog</option>
+                        <option>Catalog 01</option>
+                        <option>Catalog 02</option>
+                        <option>Catalog 03</option>
+                        <option>Catalog 04</option>
+                        <option>Catalog 05</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="form-group">
+                    <select @*name="category" id="category"*@ class="form-control">
+                        <option>All Categories</option>
+                        <option>Category 01</option>
+                        <option>Category 02</option>
+                        <option>Category 03</option>
+                        <option>Category 04</option>
+                        <option>Category 05</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2 col-sm-6">
+                <div class="form-group">
+                    <input class="form-control" type="submit" value="Search">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BookTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ISDN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PublicationDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlaceOfPublication)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookRating)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Author.AuthorName)
+            </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ISDN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PublicationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlaceOfPublication)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookRating)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Author.AuthorName)
+            </td>*@
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.BookId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.BookId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.BookId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
+</p>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#searchString').autocomplete({
+            source: '/Books/Search'
+        });
+    });
+</script>

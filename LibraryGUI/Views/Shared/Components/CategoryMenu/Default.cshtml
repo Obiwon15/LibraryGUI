@@ -1,0 +1,23 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using LibraryGUI.Models
+
+<li class="dropdown">
+    <a asp-controller="Book" asp-action="Index" class="dropdown-toggle" data-toggle="dropdown">Books<b class="caret"></b></a>
+    <ul class="dropdown-menu">
+        @foreach (var category in Model)
+        {
+            <li>
+                <a asp-controller="Book" asp-action="Index" asp-route-category="@category.GenreName">@category.GenreName</a>
+
+            </li>
+        }
+        <li class="divider"></li>
+        <li>
+            <a asp-controller="Book" asp-action="Index" asp-route-category="">View all Books</a>
+
+        </li>
+
+    </ul>
+</li>
